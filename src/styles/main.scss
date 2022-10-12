@@ -1,0 +1,48 @@
+@import 'variables';
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+
+    background-color: $color-bg;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 110rem;
+    margin-inline: auto;
+    padding-inline: 2.4rem;
+
+    // TEMP
+    padding-top: 12.8rem;
+    min-height: 100vh;
+}
+
+.flight_fields {
+    background-color: $color-white;
+    border-radius: 16px;
+    padding: 5.2rem 3.2rem;
+
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+
+    & > * {
+        flex: 1;
+    }
+}
