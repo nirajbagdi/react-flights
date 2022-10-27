@@ -6,15 +6,18 @@ type Props = {
     defaultValue?: string;
 };
 
-const FlightField: React.FC<Props> = ({ label, placeholder, defaultValue }) => {
-    const [detailPrimary, detailSecondary] = defaultValue?.split('|') ?? [];
+const FlightField: React.FC<Props> = props => {
+    const [detailPrimary, detailSecondary] = props.defaultValue?.split('|') ?? [];
 
     return (
         <div className={styles.field}>
-            <span className={styles.label}>{label}</span>
-            {placeholder && <p className={`${styles.placeholder}`}>{placeholder}</p>}
+            <span className={styles.label}>{props.label}</span>
 
-            {defaultValue && (
+            {props.placeholder && !props.defaultValue && (
+                <p className={`${styles.placeholder}`}>{props.placeholder}</p>
+            )}
+
+            {props.defaultValue && (
                 <div className={styles.details}>
                     <p>{detailPrimary}</p>
                     <span>{detailSecondary}</span>
