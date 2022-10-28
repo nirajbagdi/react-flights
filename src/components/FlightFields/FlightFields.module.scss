@@ -1,0 +1,26 @@
+@import 'styles/variables';
+
+.fields {
+    background-color: $color-white;
+    border-radius: 16px;
+    padding: 5.2rem 3.2rem;
+
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+
+    & > * {
+        flex: 1;
+    }
+}
+
+.children {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: pink;
+    z-index: 10;
+    cursor: auto;
+}
