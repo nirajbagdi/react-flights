@@ -45,4 +45,13 @@ body {
     & > * {
         flex: 1;
     }
+
+    &--children {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: pink;
+        z-index: 10;
+        cursor: auto;
+    }
 }

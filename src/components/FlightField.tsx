@@ -4,13 +4,19 @@ type Props = {
     label: string;
     placeholder?: string;
     defaultValue?: string;
+    children?: React.ReactNode;
+    onClick: () => void;
 };
 
 const FlightField: React.FC<Props> = props => {
     const [detailPrimary, detailSecondary] = props.defaultValue?.split('|') ?? [];
 
+    const handleFieldClick = () => {
+        props.onClick();
+    };
+
     return (
-        <div className={styles.field}>
+        <div className={styles.field} onClick={handleFieldClick}>
             <span className={styles.label}>{props.label}</span>
 
             {props.placeholder && !props.defaultValue && (
@@ -23,6 +29,8 @@ const FlightField: React.FC<Props> = props => {
                     <span>{detailSecondary}</span>
                 </div>
             )}
+
+            {props.children}
         </div>
     );
 };
