@@ -44,63 +44,18 @@ const FLIGHT_FIELDS = [
 const App = () => {
     const [flightFields, setFlightFields] = useState<FlightFields[]>(FLIGHT_FIELDS);
     const [currentFieldId, setCurrentFieldId] = useState<number | null>(null);
-    const [isSearchingFlightSource, setIsSearchingFlightSource] = useState(false);
-    const [isSearchingFlightDestination, setIsSearchingFlightDestination] = useState(false);
-    const [isSearchingFlightDeparture, setIsSearchingFlightDeparture] = useState(false);
-    const [isSearchingFlightTraveller, setIsSearchingFlightTraveller] = useState(false);
-
-    const showBackdrop =
-        isSearchingFlightSource ||
-        isSearchingFlightDestination ||
-        isSearchingFlightDeparture ||
-        isSearchingFlightTraveller;
 
     const handleFlightFieldClick = (field: FlightFields) => {
-        switch (field.id) {
-            case 1:
-                setCurrentFieldId(1);
-                setIsSearchingFlightSource(true);
-                setIsSearchingFlightDestination(false);
-                setIsSearchingFlightDeparture(false);
-                setIsSearchingFlightTraveller(false);
-                break;
-
-            case 2:
-                setCurrentFieldId(2);
-                setIsSearchingFlightSource(false);
-                setIsSearchingFlightDestination(true);
-                setIsSearchingFlightDeparture(false);
-                setIsSearchingFlightTraveller(false);
-                break;
-
-            case 3:
-                setCurrentFieldId(3);
-                setIsSearchingFlightSource(false);
-                setIsSearchingFlightDestination(false);
-                setIsSearchingFlightDeparture(true);
-                setIsSearchingFlightTraveller(false);
-                break;
-
-            case 4:
-                setCurrentFieldId(4);
-                setIsSearchingFlightSource(false);
-                setIsSearchingFlightDestination(false);
-                setIsSearchingFlightDeparture(false);
-                setIsSearchingFlightTraveller(true);
-                break;
-        }
+        setCurrentFieldId(field.id);
     };
 
     const handleBackdropClick = () => {
-        setIsSearchingFlightSource(false);
-        setIsSearchingFlightDestination(false);
-        setIsSearchingFlightDeparture(false);
-        setIsSearchingFlightTraveller(false);
+        setCurrentFieldId(null);
     };
 
     return (
         <div className="container">
-            <Backdrop show={showBackdrop} onClick={handleBackdropClick} />
+            <Backdrop show={currentFieldId !== null} onClick={handleBackdropClick} />
 
             <div className="flight_fields">
                 {flightFields.map(field => (
@@ -112,7 +67,7 @@ const App = () => {
                         onClick={handleFlightFieldClick.bind(null, field)}
                     >
                         <div className="flight_fields--children">
-                            {showBackdrop && currentFieldId === field.id && field.children}
+                            {currentFieldId === field.id && field.children}
                         </div>
                     </FlightField>
                 ))}
