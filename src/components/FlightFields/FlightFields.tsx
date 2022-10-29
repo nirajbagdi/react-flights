@@ -49,6 +49,7 @@ const FlightFields = () => {
                     }
                     field={{
                         label: 'From',
+                        placeholder: 'Enter city or airport',
                         value: getFlightDetails(flightsCtx.source)
                     }}
                 />
@@ -66,6 +67,7 @@ const FlightFields = () => {
                     }
                     field={{
                         label: 'To',
+                        placeholder: 'Enter city or airport',
                         value: getFlightDetails(flightsCtx.destination)
                     }}
                 />
