@@ -12,7 +12,7 @@ const FlightSearch: React.FC<Props> = props => {
 
     useEffect(() => {
         searchInputRef.current?.focus();
-    }, [searchInputRef.current]);
+    }, [searchInputRef]);
 
     return (
         <div className={styles.search}>
