@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Backdrop from 'components/Layout/Backdrop';
 import FlightField from './FlightField/FlightField';
+import FlightSearch from 'components/FlightSearch/FlightSearch';
 import styles from './FlightFields.module.scss';
 
 type FlightFields = {
@@ -17,14 +18,14 @@ const FLIGHT_FIELDS = [
         label: 'From',
         placeholder: '',
         defaultValue: 'Mumbai|BOM, Chhatrapati Shivaji Internatio...',
-        children: <p>Source</p>
+        children: <FlightSearch id="source" label="From" />
     },
     {
         id: 2,
         label: 'To',
         placeholder: '',
         defaultValue: 'Bengaluru|BLR, Bengaluru International Airpor...',
-        children: <p>Destination</p>
+        children: <FlightSearch id="destination" label="To" />
     },
     {
         id: 3,

@@ -1,4 +1,5 @@
 import styles from './FlightField.module.scss';
+import utilStyles from 'styles/utils.module.scss';
 
 type Props = {
     label: string;
@@ -16,8 +17,8 @@ const FlightField: React.FC<Props> = props => {
     };
 
     return (
-        <div className={styles.field} onClick={handleFieldClick}>
-            <span className={styles.label}>{props.label}</span>
+        <div className={`${utilStyles.flightField} ${styles.field}`} onClick={handleFieldClick}>
+            <span className={`${utilStyles.label} ${styles.label}`}>{props.label}</span>
 
             {props.placeholder && !props.defaultValue && (
                 <p className={`${styles.placeholder}`}>{props.placeholder}</p>

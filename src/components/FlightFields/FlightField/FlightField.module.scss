@@ -7,16 +7,8 @@ $color-gray-7: #777;
 // #141823
 
 .field {
-    position: relative;
     cursor: pointer;
-    z-index: 8;
-
-    background-color: $color-white;
-    border-radius: 8px;
-    padding: 2.4rem;
     border: 2px solid $field-border-color;
-
-    // max-width: 30rem;
 
     &:hover {
         border-color: #777;
@@ -33,16 +25,7 @@ $color-gray-7: #777;
     }
 
     .label {
-        position: absolute;
-        top: -10px;
-        left: 12px;
-
-        font-size: 1.4rem;
-        font-weight: 600;
         color: $color-gray-7;
-
-        background-color: $color-white;
-        padding: 0.2rem 1.2rem;
     }
 
     .placeholder {

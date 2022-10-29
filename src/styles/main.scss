@@ -21,6 +21,13 @@ body {
     overflow: hidden;
 }
 
+input,
+button {
+    outline: none;
+    border: none;
+    font: inherit;
+}
+
 .container {
     max-width: 110rem;
     margin-inline: auto;
