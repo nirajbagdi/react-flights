@@ -35,7 +35,7 @@ $color-gray-7: #777;
     }
 
     .details {
-        color: #141823;
+        color: $color-text-primary;
         font-weight: 500;
 
         display: flex;
@@ -58,4 +58,5 @@ $color-gray-7: #777;
     cursor: auto;
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
 }

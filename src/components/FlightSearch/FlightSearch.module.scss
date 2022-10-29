@@ -1,14 +1,55 @@
 @import 'styles/variables';
 
 .search {
-    padding: 3.2rem 2.4rem;
+    padding: 3.2rem 2.4rem 2.4rem;
     width: 45rem;
+
+    .field {
+        border: 2px solid $color-accent;
+
+        .label {
+            color: $color-accent;
+        }
+
+        input {
+            color: $color-text-primary;
+        }
+    }
 }
 
-.field {
-    border: 2px solid $color-accent;
+.options {
+    border-top: 1px solid #f2f2f2;
+    height: 21.4rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
 
-    .label {
-        color: $color-accent;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .list {
+        .airport {
+            padding: 1.2rem 2.4rem;
+            cursor: pointer;
+            color: $color-text-primary;
+
+            & p:first-child {
+                font-weight: 500;
+                margin-bottom: 0.2rem;
+
+                span {
+                    font-weight: 300;
+                }
+            }
+
+            & P:nth-child(2) {
+                font-size: 1.2rem;
+                color: #777;
+            }
+
+            &:hover {
+                background-color: #edf4fd;
+            }
+        }
     }
 }
