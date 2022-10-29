@@ -10,6 +10,8 @@ $color-gray-7: #777;
     cursor: pointer;
     border: 2px solid $field-border-color;
 
+    // max-width: 30rem;
+
     &:hover {
         border-color: #777;
     }
@@ -45,4 +47,15 @@ $color-gray-7: #777;
             font-weight: 400;
         }
     }
+}
+
+.children {
+    position: absolute;
+    top: -28px;
+    left: -25px;
+    background-color: #fff;
+    z-index: 10;
+    cursor: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }

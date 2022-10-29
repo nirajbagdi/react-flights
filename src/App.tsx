@@ -1,12 +1,12 @@
-import { FlightsProvider } from 'context';
 import { FlightFields } from 'components';
+import { FlightsProvider } from 'context';
 
-const App = () => (
-    <FlightsProvider>
-        <div className="container">
+const App = () => {
+    return (
+        <FlightsProvider>
             <FlightFields />
-        </div>
-    </FlightsProvider>
-);
+        </FlightsProvider>
+    );
+};
 
 export default App;

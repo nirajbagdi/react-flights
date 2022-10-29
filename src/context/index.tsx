@@ -7,7 +7,7 @@ const FlightsContext = createContext(initialState);
 export const useFlightsCtx = () => useContext(FlightsContext);
 
 export const FlightsProvider: React.FC<Props> = ({ children }) => {
-    const currentSource = {
+    const source = {
         id: 1,
         name: 'Bengaluru International Airport',
         country: 'India',
@@ -15,7 +15,7 @@ export const FlightsProvider: React.FC<Props> = ({ children }) => {
         code: 'BEL'
     };
 
-    const currentDestination = {
+    const destination = {
         id: 2,
         name: 'Indira Gandhi International Air...',
         country: 'India',
@@ -23,9 +23,5 @@ export const FlightsProvider: React.FC<Props> = ({ children }) => {
         code: 'DEL'
     };
 
-    return (
-        <FlightsContext.Provider value={{ currentSource, currentDestination }}>
-            {children}
-        </FlightsContext.Provider>
-    );
+    return <FlightsContext.Provider value={{ source, destination }}>{children}</FlightsContext.Provider>;
 };

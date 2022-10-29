@@ -1,11 +1,11 @@
-import * as MODEL from 'models';
+import * as Models from 'models';
 
 export type ContextState = {
-    currentSource: MODEL.Airport | null;
-    currentDestination: MODEL.Airport | null;
+    source: Models.Airport | null;
+    destination: Models.Airport | null;
 };
 
 export const initialState: ContextState = {
-    currentSource: null,
-    currentDestination: null
+    source: null,
+    destination: null
 };

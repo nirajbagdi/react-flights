@@ -1,94 +1,76 @@
-import { useState, useEffect } from 'react';
-import { useFlightsCtx } from 'context';
-import Backdrop from 'components/Layout/Backdrop';
-import FlightField from './FlightField/FlightField';
-import FlightSearch from 'components/FlightSearch/FlightSearch';
-import styles from './FlightFields.module.scss';
-import * as MODEL from 'models';
+import { useState } from 'react';
 
-const FLIGHT_FIELDS = [
-    {
-        id: 1,
-        label: 'From',
-        placeholder: '',
-        defaultValue: 'Mumbai|BOM, Chhatrapati Shivaji Internatio...',
-        children: <FlightSearch id="source" label="From" />
-    },
-    {
-        id: 2,
-        label: 'To',
-        placeholder: '',
-        defaultValue: 'Bengaluru|BLR, Bengaluru International Airpor...',
-        children: <FlightSearch id="destination" label="To" />
-    },
-    {
-        id: 3,
-        label: 'Departure',
-        placeholder: '',
-        defaultValue: "12 Oct'2022|Wednesday",
-        children: <p>Departure Date</p>
-    },
-    {
-        id: 4,
-        label: 'Traveller & Class',
-        placeholder: '',
-        defaultValue: '1 Adult|Economy',
-        children: <p>Traveller</p>
-    }
-];
+import { useFlightsCtx } from 'context';
+import { FlightField, FlightSearch, Backdrop } from 'components';
+import * as Models from 'models';
+
+import styles from './FlightFields.module.scss';
+import utilStyles from 'styles/utils.module.scss';
+
+enum FieldIds {
+    SOURCE = 1,
+    DESTINATION = 2,
+    DEPARTURE_DATE = 3,
+    TRAVELLER_CLASS = 4
+}
 
 const FlightFields = () => {
-    const [flightFields, setFlightFields] = useState<MODEL.FlightFields[]>(FLIGHT_FIELDS);
-    const [currentFieldId, setCurrentFieldId] = useState<number | null>(null);
+    const [fieldId, setFieldId] = useState<number | null>(null);
 
     const flightsCtx = useFlightsCtx();
 
-    useEffect(() => {
-        setFlightFields(prevFlightFields => {
-            return prevFlightFields.map(flightField => {
-                if (flightField.id === 1) {
-                    const { name, city, code } = flightsCtx.currentSource ?? {};
-                    const defaultSource = `${city}|${code}, ${name}`;
-
-                    return { ...flightField, defaultValue: defaultSource };
-                } else if (flightField.id === 2) {
-                    const { name, city, code } = flightsCtx.currentDestination ?? {};
-                    const defaultDestination = `${city}|${code}, ${name}`;
-
-                    return { ...flightField, defaultValue: defaultDestination };
-                } else {
-                    return flightField;
-                }
-            });
-        });
-    }, [flightsCtx.currentSource, flightsCtx.currentDestination]);
-
-    const handleFlightFieldClick = (field: MODEL.FlightFields) => {
-        setCurrentFieldId(field.id);
-    };
-
-    const handleBackdropClick = () => {
-        setCurrentFieldId(null);
+    const getFlight = (flightObj: Models.Airport | null) => {
+        if (!flightObj) return;
+        const { name, city, code } = flightObj;
+        return `${city}|${code}, ${name}`;
     };
 
     return (
-        <>
-            <Backdrop show={currentFieldId !== null} onClick={handleBackdropClick} />
+        <div className={utilStyles.container}>
+            <Backdrop show={fieldId !== null} onClose={() => setFieldId(null)} />
 
             <div className={styles.fields}>
-                {flightFields.map(field => (
-                    <FlightField
-                        key={field.id}
-                        label={field.label}
-                        placeholder={field.placeholder}
-                        defaultValue={field.defaultValue}
-                        onClick={handleFlightFieldClick.bind(null, field)}
-                    >
-                        <div className={styles.children}>{currentFieldId === field.id && field.children}</div>
-                    </FlightField>
-                ))}
+                <FlightField
+                    expand={fieldId === FieldIds.SOURCE}
+                    onExpand={() => setFieldId(FieldIds.SOURCE)}
+                    childComp={<FlightSearch id="source" label="From" />}
+                    field={{
+                        label: 'From',
+                        value: getFlight(flightsCtx.source)
+                    }}
+                />
+
+                <FlightField
+                    expand={fieldId === FieldIds.DESTINATION}
+                    onExpand={() => setFieldId(FieldIds.DESTINATION)}
+                    childComp={<FlightSearch id="destination" label="To" />}
+                    field={{
+                        label: 'To',
+                        value: getFlight(flightsCtx.destination)
+                    }}
+                />
+
+                <FlightField
+                    expand={fieldId === FieldIds.DEPARTURE_DATE}
+                    onExpand={() => setFieldId(FieldIds.DEPARTURE_DATE)}
+                    childComp={<p>Departure Date</p>}
+                    field={{
+                        label: 'Departure',
+                        value: "12 Oct'2022|Wednesday"
+                    }}
+                />
+
+                <FlightField
+                    expand={fieldId === FieldIds.TRAVELLER_CLASS}
+                    onExpand={() => setFieldId(FieldIds.TRAVELLER_CLASS)}
+                    childComp={<p>Traveller & Class</p>}
+                    field={{
+                        label: 'Traveller & Class',
+                        value: '1 Adult|Economy'
+                    }}
+                />
             </div>
-        </>
+        </div>
     );
 };
 
