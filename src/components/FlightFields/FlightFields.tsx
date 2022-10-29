@@ -44,6 +44,7 @@ const FlightFields = () => {
                             id="source"
                             label="From"
                             defaultValue={getFlightCityAndCode(flightsCtx.source)}
+                            onOptionSelect={() => setFieldId(null)}
                         />
                     }
                     field={{
@@ -60,6 +61,7 @@ const FlightFields = () => {
                             id="destination"
                             label="To"
                             defaultValue={getFlightCityAndCode(flightsCtx.destination)}
+                            onOptionSelect={() => setFieldId(null)}
                         />
                     }
                     field={{

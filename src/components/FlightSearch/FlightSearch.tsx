@@ -1,5 +1,9 @@
 import { useRef, useEffect } from 'react';
 
+import * as Model from 'models';
+import { DUMMY_AIRPORTS } from 'data';
+import { useFlightsCtx } from 'context';
+
 import styles from './FlightSearch.module.scss';
 import utilStyles from 'styles/utils.module.scss';
 
@@ -7,23 +11,28 @@ type Props = {
     id: string;
     label: string;
     defaultValue?: string;
+    onOptionSelect: () => void;
 };
-
-// prettier-ignore
-const DUMMY_AIRPORTS = [
-    { id: 1, name: 'Chhatrapati Shivaji International Airport', country: 'India', city: 'Mumbai', code: 'BOM' },
-    { id: 2, name: 'Bengaluru International Airport', country: 'India', city: 'Bengaluru', code: 'BEL' },
-    { id: 3, name: 'John F. Kennedy Intl Airport', country: 'USA', city: 'New York', code: 'JFK' },
-    { id: 3, name: 'Indira Gandhi International Airport', country: 'India', city: 'New Delhi', code: 'DEL' }
-];
 
 const FlightSearch: React.FC<Props> = props => {
     const searchInputRef = useRef<HTMLInputElement>(null);
+
+    const flightsCtx = useFlightsCtx();
 
     useEffect(() => {
         searchInputRef.current?.focus();
         searchInputRef.current?.select();
     }, [searchInputRef]);
+
+    const handleOptionClick = (airport: Model.Airport) => {
+        if (props.label.toLowerCase() === 'from') {
+            flightsCtx.changeAirportSource(airport);
+        } else if (props.label.toLowerCase() === 'to') {
+            flightsCtx.changeAirportDestination(airport);
+        }
+
+        props.onOptionSelect();
+    };
 
     return (
         <>
@@ -41,7 +50,7 @@ const FlightSearch: React.FC<Props> = props => {
                 <ul className={styles.list}>
                     {DUMMY_AIRPORTS.map(airport =>
                         // prettier-ignore
-                        <li className={styles.airport} key={airport.id}>
+                        <li key={airport.id} className={styles.airport} onClick={handleOptionClick.bind(null, airport)}>
                             <p>{airport.city}, {airport.country} <span>({airport.code})</span></p>
                             <p>{airport.name}</p>
                         </li>

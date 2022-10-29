@@ -6,15 +6,8 @@ $color-gray-7: #777;
 
 // #141823
 
-.field {
-    cursor: pointer;
-    border: 2px solid $field-border-color;
-
-    // max-width: 30rem;
-
-    &:hover {
-        border-color: #777;
-    }
+.fieldContainer {
+    position: relative;
 
     &:first-child,
     &:nth-child(2) {
@@ -24,6 +17,15 @@ $color-gray-7: #777;
     &:nth-child(3),
     &:nth-child(4) {
         max-width: 18rem;
+    }
+}
+
+.field {
+    cursor: pointer;
+    border: 2px solid $field-border-color;
+
+    &:hover {
+        border-color: #777;
     }
 
     .label {
