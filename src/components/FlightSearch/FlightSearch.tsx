@@ -1,8 +1,9 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 import * as Model from 'models';
 import { DUMMY_AIRPORTS } from 'data';
 import { useFlightsCtx } from 'context';
+import { findAirportMatches } from 'helpers';
 
 import styles from './FlightSearch.module.scss';
 import utilStyles from 'styles/utils.module.scss';
@@ -16,13 +17,23 @@ type Props = {
 
 const FlightSearch: React.FC<Props> = props => {
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const [searchValue, setSearchValue] = useState('');
+    const [filteredMatches, setFilteredMatches] = useState(DUMMY_AIRPORTS);
 
     const flightsCtx = useFlightsCtx();
 
     useEffect(() => {
         searchInputRef.current?.focus();
-        searchInputRef.current?.select();
     }, [searchInputRef]);
+
+    useEffect(() => {
+        setSearchValue(props.defaultValue ?? '');
+    }, [props.defaultValue]);
+
+    useEffect(() => {
+        const matches = findAirportMatches(searchValue, DUMMY_AIRPORTS);
+        setFilteredMatches(matches);
+    }, [searchValue]);
 
     const handleOptionClick = (airport: Model.Airport) => {
         if (props.label.toLowerCase() === 'from') {
@@ -42,6 +53,10 @@ const FlightSearch: React.FC<Props> = props => {
         }
     };
 
+    const handleSearchInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+        setSearchValue(event.currentTarget.value);
+    };
+
     return (
         <>
             <div className={styles.search}>
@@ -50,13 +65,19 @@ const FlightSearch: React.FC<Props> = props => {
                         {props.label}
                     </label>
 
-                    <input type="text" id={props.id} ref={searchInputRef} defaultValue={props.defaultValue} />
+                    <input
+                        type="text"
+                        id={props.id}
+                        ref={searchInputRef}
+                        value={searchValue}
+                        onInput={handleSearchInputChange}
+                    />
                 </div>
             </div>
 
             <div className={styles.options}>
                 <ul className={styles.list}>
-                    {DUMMY_AIRPORTS.map(airport => (
+                    {filteredMatches.map(airport => (
                         <li
                             key={airport.id}
                             className={`${styles.airport} ${getOptionSelectedClass(airport)}`}
