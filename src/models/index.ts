@@ -5,3 +5,11 @@ export type FlightFields = {
     defaultValue: string;
     children: React.ReactNode;
 };
+
+export type Airport = {
+    id: number;
+    name: string;
+    country: string;
+    code: string;
+    city: string;
+};

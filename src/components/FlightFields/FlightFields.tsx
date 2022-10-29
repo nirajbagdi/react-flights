@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useFlightsCtx } from 'context';
 import Backdrop from 'components/Layout/Backdrop';
 import FlightField from './FlightField/FlightField';
 import FlightSearch from 'components/FlightSearch/FlightSearch';
@@ -39,6 +40,28 @@ const FLIGHT_FIELDS = [
 const FlightFields = () => {
     const [flightFields, setFlightFields] = useState<MODEL.FlightFields[]>(FLIGHT_FIELDS);
     const [currentFieldId, setCurrentFieldId] = useState<number | null>(null);
+
+    const flightsCtx = useFlightsCtx();
+
+    useEffect(() => {
+        setFlightFields(prevFlightFields => {
+            return prevFlightFields.map(flightField => {
+                if (flightField.id === 1) {
+                    const { name, city, code } = flightsCtx.currentSource ?? {};
+                    const defaultSource = `${city}|${code}, ${name}`;
+
+                    return { ...flightField, defaultValue: defaultSource };
+                } else if (flightField.id === 2) {
+                    const { name, city, code } = flightsCtx.currentDestination ?? {};
+                    const defaultDestination = `${city}|${code}, ${name}`;
+
+                    return { ...flightField, defaultValue: defaultDestination };
+                } else {
+                    return flightField;
+                }
+            });
+        });
+    }, [flightsCtx.currentSource, flightsCtx.currentDestination]);
 
     const handleFlightFieldClick = (field: MODEL.FlightFields) => {
         setCurrentFieldId(field.id);
