@@ -3,14 +3,7 @@ import Backdrop from 'components/Layout/Backdrop';
 import FlightField from './FlightField/FlightField';
 import FlightSearch from 'components/FlightSearch/FlightSearch';
 import styles from './FlightFields.module.scss';
-
-type FlightFields = {
-    id: number;
-    label: string;
-    placeholder: string;
-    defaultValue: string;
-    children: React.ReactNode;
-};
+import * as MODEL from 'models';
 
 const FLIGHT_FIELDS = [
     {
@@ -44,10 +37,10 @@ const FLIGHT_FIELDS = [
 ];
 
 const FlightFields = () => {
-    const [flightFields, setFlightFields] = useState<FlightFields[]>(FLIGHT_FIELDS);
+    const [flightFields, setFlightFields] = useState<MODEL.FlightFields[]>(FLIGHT_FIELDS);
     const [currentFieldId, setCurrentFieldId] = useState<number | null>(null);
 
-    const handleFlightFieldClick = (field: FlightFields) => {
+    const handleFlightFieldClick = (field: MODEL.FlightFields) => {
         setCurrentFieldId(field.id);
     };
 
