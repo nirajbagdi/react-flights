@@ -19,10 +19,16 @@ const FlightFields = () => {
 
     const flightsCtx = useFlightsCtx();
 
-    const getFlight = (flightObj: Models.Airport | null) => {
+    const getFlightDetails = (flightObj: Models.Airport | null) => {
         if (!flightObj) return;
         const { name, city, code } = flightObj;
         return `${city}|${code}, ${name}`;
+    };
+
+    const getFlightCityAndCode = (flightObj: Models.Airport | null) => {
+        if (!flightObj) return;
+        const { city, code } = flightObj;
+        return `${city} (${code})`;
     };
 
     return (
@@ -33,20 +39,32 @@ const FlightFields = () => {
                 <FlightField
                     expand={fieldId === FieldIds.SOURCE}
                     onExpand={() => setFieldId(FieldIds.SOURCE)}
-                    childComp={<FlightSearch id="source" label="From" />}
+                    childComp={
+                        <FlightSearch
+                            id="source"
+                            label="From"
+                            defaultValue={getFlightCityAndCode(flightsCtx.source)}
+                        />
+                    }
                     field={{
                         label: 'From',
-                        value: getFlight(flightsCtx.source)
+                        value: getFlightDetails(flightsCtx.source)
                     }}
                 />
 
                 <FlightField
                     expand={fieldId === FieldIds.DESTINATION}
                     onExpand={() => setFieldId(FieldIds.DESTINATION)}
-                    childComp={<FlightSearch id="destination" label="To" />}
+                    childComp={
+                        <FlightSearch
+                            id="destination"
+                            label="To"
+                            defaultValue={getFlightCityAndCode(flightsCtx.destination)}
+                        />
+                    }
                     field={{
                         label: 'To',
-                        value: getFlight(flightsCtx.destination)
+                        value: getFlightDetails(flightsCtx.destination)
                     }}
                 />
 

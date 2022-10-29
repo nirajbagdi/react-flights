@@ -1,10 +1,12 @@
 import { useRef, useEffect } from 'react';
+
 import styles from './FlightSearch.module.scss';
 import utilStyles from 'styles/utils.module.scss';
 
 type Props = {
     id: string;
     label: string;
+    defaultValue?: string;
 };
 
 const FlightSearch: React.FC<Props> = props => {
@@ -12,6 +14,7 @@ const FlightSearch: React.FC<Props> = props => {
 
     useEffect(() => {
         searchInputRef.current?.focus();
+        searchInputRef.current?.select();
     }, [searchInputRef]);
 
     return (
@@ -21,7 +24,7 @@ const FlightSearch: React.FC<Props> = props => {
                     {props.label}
                 </label>
 
-                <input type="text" id={props.id} ref={searchInputRef} />
+                <input type="text" id={props.id} ref={searchInputRef} defaultValue={props.defaultValue} />
             </div>
         </div>
     );
