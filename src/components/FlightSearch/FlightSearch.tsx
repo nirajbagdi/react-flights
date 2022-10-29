@@ -34,6 +34,14 @@ const FlightSearch: React.FC<Props> = props => {
         props.onOptionSelect();
     };
 
+    const getOptionSelectedClass = (airport: Model.Airport) => {
+        if (props.label.toLowerCase() === 'from') {
+            return flightsCtx.source?.city === airport.city ? styles.selected : '';
+        } else if (props.label.toLowerCase() === 'to') {
+            return flightsCtx.destination?.city === airport.city ? styles.selected : '';
+        }
+    };
+
     return (
         <>
             <div className={styles.search}>
@@ -48,13 +56,18 @@ const FlightSearch: React.FC<Props> = props => {
 
             <div className={styles.options}>
                 <ul className={styles.list}>
-                    {DUMMY_AIRPORTS.map(airport =>
-                        // prettier-ignore
-                        <li key={airport.id} className={styles.airport} onClick={handleOptionClick.bind(null, airport)}>
-                            <p>{airport.city}, {airport.country} <span>({airport.code})</span></p>
+                    {DUMMY_AIRPORTS.map(airport => (
+                        <li
+                            key={airport.id}
+                            className={`${styles.airport} ${getOptionSelectedClass(airport)}`}
+                            onClick={handleOptionClick.bind(null, airport)}
+                        >
+                            <p>
+                                {airport.city}, {airport.country} <span>({airport.code})</span>
+                            </p>
                             <p>{airport.name}</p>
                         </li>
-                    )}
+                    ))}
                 </ul>
             </div>
         </>

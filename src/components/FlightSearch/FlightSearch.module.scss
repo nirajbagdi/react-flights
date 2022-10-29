@@ -47,7 +47,8 @@
                 color: #777;
             }
 
-            &:hover {
+            &:hover,
+            &.selected {
                 background-color: #edf4fd;
             }
         }
