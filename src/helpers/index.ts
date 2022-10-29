@@ -1,6 +1,8 @@
 import * as Model from 'models';
 
 export function findAirportMatches(wordToMatch: string, airportsList: Model.Airport[]) {
+    if (!wordToMatch.trim().length) return [];
+
     return airportsList.filter(airport => {
         if (wordToMatch.search('[\\[\\]?*+|{}\\\\()@.\n\r]') !== -1) return;
         const regex = new RegExp(wordToMatch, 'gi');

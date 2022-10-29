@@ -18,9 +18,13 @@ type Props = {
 const FlightSearch: React.FC<Props> = props => {
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchValue, setSearchValue] = useState('');
-    const [filteredMatches, setFilteredMatches] = useState(DUMMY_AIRPORTS);
+    const [filteredMatches, setFilteredMatches] = useState<Model.Airport[]>([]);
 
     const flightsCtx = useFlightsCtx();
+
+    useEffect(() => {
+        setFilteredMatches(DUMMY_AIRPORTS);
+    }, [DUMMY_AIRPORTS]);
 
     useEffect(() => {
         searchInputRef.current?.focus();
