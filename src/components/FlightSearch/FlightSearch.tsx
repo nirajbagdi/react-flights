@@ -24,7 +24,7 @@ const FlightSearch: React.FC<Props> = props => {
 
     useEffect(() => {
         setFilteredMatches(DUMMY_AIRPORTS);
-    }, [DUMMY_AIRPORTS]);
+    }, []);
 
     useEffect(() => {
         searchInputRef.current?.focus();
