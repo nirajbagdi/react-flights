@@ -1,7 +1,6 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 
 import * as Model from 'models';
-import { DUMMY_AIRPORTS } from 'data';
 import { useFlightsCtx } from 'context';
 import { findAirportMatches } from 'helpers';
 
@@ -18,13 +17,13 @@ type Props = {
 const FlightSearch: React.FC<Props> = props => {
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchValue, setSearchValue] = useState('');
-    const [filteredMatches, setFilteredMatches] = useState<Model.Airport[]>([]);
 
     const flightsCtx = useFlightsCtx();
 
-    useEffect(() => {
-        setFilteredMatches(DUMMY_AIRPORTS);
-    }, []);
+    const filteredMatches = useCallback(
+        () => findAirportMatches(searchValue, flightsCtx.airports),
+        [searchValue, flightsCtx.airports]
+    )();
 
     useEffect(() => {
         searchInputRef.current?.focus();
@@ -33,11 +32,6 @@ const FlightSearch: React.FC<Props> = props => {
     useEffect(() => {
         setSearchValue(props.defaultValue ?? '');
     }, [props.defaultValue]);
-
-    useEffect(() => {
-        const matches = findAirportMatches(searchValue, DUMMY_AIRPORTS);
-        setFilteredMatches(matches);
-    }, [searchValue]);
 
     const handleOptionClick = (airport: Model.Airport) => {
         if (props.label.toLowerCase() === 'from') {
