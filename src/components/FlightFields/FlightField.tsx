@@ -1,3 +1,5 @@
+import { truncuateText } from 'helpers';
+
 import styles from './FlightField.module.scss';
 import utilStyles from 'styles/utils.module.scss';
 
@@ -28,7 +30,7 @@ const FlightField: React.FC<Props> = props => {
                 {props.field.value && (
                     <div className={styles.details}>
                         <p>{detailPrimary}</p>
-                        <span>{detailSecondary}</span>
+                        <span>{truncuateText(detailSecondary, 35)}</span>
                     </div>
                 )}
             </div>
