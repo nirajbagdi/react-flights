@@ -1,3 +1,4 @@
+import moment, { Moment } from 'moment';
 import * as Model from 'models';
 
 export function findAirportMatches(wordToMatch: string, airportsList: Model.Airport[]) {
@@ -13,4 +14,15 @@ export function findAirportMatches(wordToMatch: string, airportsList: Model.Airp
 
 export const truncuateText = (str: string, truncuateAt: number) => {
     return `${str.substring(0, truncuateAt)}${str.length > truncuateAt ? '...' : ''}`;
+};
+
+export const extractDateInfo = (date: Moment) => {
+    const dateStr = date.toISOString();
+
+    return {
+        day: moment(dateStr).format('dddd'),
+        month: moment(dateStr).format('MMM'),
+        date: moment(dateStr).date(),
+        year: moment(dateStr).year()
+    };
 };

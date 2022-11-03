@@ -6,6 +6,7 @@ import utilStyles from 'styles/utils.module.scss';
 type Props = {
     expand: boolean;
     childComp?: React.ReactNode;
+    isChildCompLarge?: boolean;
     onExpand: () => void;
 
     field: {
@@ -24,7 +25,13 @@ const FlightField: React.FC<Props> = props => {
                 <span className={`${utilStyles.label} ${styles.label}`}>{props.field.label}</span>
 
                 {props.field.placeholder && !props.field.value && (
-                    <p className={`${styles.placeholder}`}>{props.field.placeholder}</p>
+                    <p
+                        className={`${styles.placeholder} ${
+                            props.field.placeholder.length > 25 ? styles.small : ''
+                        }`}
+                    >
+                        {props.field.placeholder}
+                    </p>
                 )}
 
                 {props.field.value && (
@@ -35,7 +42,11 @@ const FlightField: React.FC<Props> = props => {
                 )}
             </div>
 
-            {props.expand && <div className={styles.children}>{props.childComp}</div>}
+            {props.expand && (
+                <div className={`${styles.children} ${props.isChildCompLarge ? styles.slideLeft : ''}`}>
+                    {props.childComp}
+                </div>
+            )}
         </div>
     );
 };

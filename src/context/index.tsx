@@ -1,4 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+
+import moment, { Moment } from 'moment';
 import { v4 as uuid } from 'uuid';
 
 import * as Model from 'models';
@@ -16,6 +18,12 @@ export const FlightsProvider: React.FC<Props> = ({ children }) => {
     const [airports, setAirports] = useState<Model.Airport[]>([]);
     const [source, setSource] = useState<Model.Airport | null>(null);
     const [destination, setDestination] = useState<Model.Airport | null>(null);
+    const [departureDate, setDepartureDate] = useState<Moment | null>(null);
+    const [returnDate, setReturnDate] = useState<Moment | null>(null);
+
+    useEffect(() => {
+        setDepartureDate(moment());
+    }, []);
 
     useEffect(() => {
         (async function () {
@@ -38,10 +46,22 @@ export const FlightsProvider: React.FC<Props> = ({ children }) => {
 
     const changeAirportSource = (newSource: Model.Airport) => setSource(newSource);
     const changeAirportDestination = (newDestination: Model.Airport) => setDestination(newDestination);
+    const changeDepartureDate = (date: Moment) => setDepartureDate(date);
+    const changeReturnDate = (date: Moment) => setReturnDate(date);
 
     return (
         <FlightsContext.Provider
-            value={{ airports, source, destination, changeAirportSource, changeAirportDestination }}
+            value={{
+                airports,
+                source,
+                destination,
+                departureDate,
+                returnDate,
+                changeAirportSource,
+                changeAirportDestination,
+                changeDepartureDate,
+                changeReturnDate
+            }}
         >
             {children}
         </FlightsContext.Provider>

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
+import { Moment } from 'moment';
+
 import { useFlightsCtx } from 'context';
-import { FlightField, FlightSearch, Backdrop } from 'components';
+import { FlightField, FlightSearch, Backdrop, DatePicker } from 'components';
+import { extractDateInfo } from 'helpers';
 import * as Models from 'models';
 
 import styles from './FlightFields.module.scss';
@@ -11,7 +14,8 @@ enum FieldIds {
     SOURCE = 1,
     DESTINATION = 2,
     DEPARTURE_DATE = 3,
-    TRAVELLER_CLASS = 4
+    RETURN_DATE = 4,
+    TRAVELLER_CLASS = 5
 }
 
 const FlightFields = () => {
@@ -29,6 +33,12 @@ const FlightFields = () => {
         if (!flightObj) return;
         const { city, code } = flightObj;
         return `${city} (${code})`;
+    };
+
+    const getFlightDateValue = (momentDate: Moment | null) => {
+        if (!momentDate) return;
+        const { date, day, month, year } = extractDateInfo(momentDate);
+        return `${date} ${month}'${year}|${day}`;
     };
 
     return (
@@ -75,14 +85,27 @@ const FlightFields = () => {
                 <FlightField
                     expand={fieldId === FieldIds.DEPARTURE_DATE}
                     onExpand={() => setFieldId(FieldIds.DEPARTURE_DATE)}
-                    childComp={<p>Departure Date</p>}
+                    isChildCompLarge
+                    childComp={<DatePicker />}
                     field={{
                         label: 'Departure',
-                        value: "12 Oct'2022|Wednesday"
+                        value: getFlightDateValue(flightsCtx.departureDate)
                     }}
                 />
 
                 <FlightField
+                    expand={fieldId === FieldIds.RETURN_DATE}
+                    onExpand={() => setFieldId(FieldIds.RETURN_DATE)}
+                    isChildCompLarge
+                    childComp={<DatePicker />}
+                    field={{
+                        label: 'Return',
+                        placeholder: 'Click to add a return flight',
+                        value: getFlightDateValue(flightsCtx.returnDate)
+                    }}
+                />
+
+                {/* <FlightField
                     expand={fieldId === FieldIds.TRAVELLER_CLASS}
                     onExpand={() => setFieldId(FieldIds.TRAVELLER_CLASS)}
                     childComp={<p>Traveller & Class</p>}
@@ -90,7 +113,7 @@ const FlightFields = () => {
                         label: 'Traveller & Class',
                         value: '1 Adult|Economy'
                     }}
-                />
+                /> */}
             </div>
         </div>
     );
