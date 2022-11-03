@@ -105,7 +105,7 @@ const FlightFields = () => {
                     }}
                 />
 
-                {/* <FlightField
+                <FlightField
                     expand={fieldId === FieldIds.TRAVELLER_CLASS}
                     onExpand={() => setFieldId(FieldIds.TRAVELLER_CLASS)}
                     childComp={<p>Traveller & Class</p>}
@@ -113,7 +113,7 @@ const FlightFields = () => {
                         label: 'Traveller & Class',
                         value: '1 Adult|Economy'
                     }}
-                /> */}
+                />
             </div>
         </div>
     );
